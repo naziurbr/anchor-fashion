@@ -1,0 +1,30 @@
+const apparelSizes = ['S', 'M', 'L', 'XL'];
+const modestSizes = ['S', 'M', 'L', 'XL'];
+
+export const products = [
+  { id: 'af-001', slug: 'rangpur-oxford-shirt', name: 'Rangpur Oxford Shirt', category: 'Men', price: 2890, compareAt: 3490, images: ['/images/item-01.png', '/images/item-02.png'], sizes: apparelSizes, colors: ['Ink', 'Stone'], description: 'A crisp, everyday Oxford with a relaxed shoulder and considered tailoring. Woven for long days and finished with discreet Anchor detailing.', stock: 18, isNew: true, featured: true },
+  { id: 'af-002', slug: 'riverstone-knit-polo', name: 'Riverstone Knit Polo', category: 'Men', price: 2490, images: ['/images/item-02.png', '/images/item-03.png'], sizes: apparelSizes, colors: ['Olive', 'Ecru'], description: 'Soft cotton knit, an easy open collar, and a silhouette that moves cleanly from afternoon to evening.', stock: 24, isNew: true, featured: true },
+  { id: 'af-003', slug: 'northline-overshirt', name: 'Northline Overshirt', category: 'Men', price: 4290, compareAt: 4890, images: ['/images/item-03.png', '/images/item-04.png'], sizes: apparelSizes, colors: ['Olive', 'Ink'], description: 'A light structured layer with utility pockets, tonal buttons, and a clean, versatile profile.', stock: 11, isNew: false, featured: true },
+  { id: 'af-004', slug: 'studio-wide-leg-trouser', name: 'Studio Wide-Leg Trouser', category: 'Men', price: 3290, images: ['/images/item-04.png', '/images/item-05.png'], sizes: apparelSizes, colors: ['Charcoal', 'Sand'], description: 'A straight drape, easy movement, and a refined finish make this a reliable anchor for your wardrobe.', stock: 16, isNew: false, featured: false },
+  { id: 'af-005', slug: 'weekday-linen-shirt', name: 'Weekday Linen Shirt', category: 'Men', price: 2790, images: ['/images/item-05.png', '/images/item-01.png'], sizes: apparelSizes, colors: ['Cloud', 'Sage'], description: 'Breathable linen-blend fabric with a softly tailored fit, made for warm-weather layering.', stock: 21, isNew: true, featured: false },
+  { id: 'af-006', slug: 'field-notes-canvas-tote', name: 'Field Notes Canvas Tote', category: 'Accessories', price: 1290, images: ['/images/item-06.png', '/images/item-07.png'], sizes: [], colors: ['Natural', 'Ink'], description: 'A sturdy everyday carryall in heavyweight cotton canvas with an interior pocket and reinforced handles.', stock: 30, isNew: false, featured: true },
+  { id: 'af-007', slug: 'heritage-leather-belt', name: 'Heritage Leather Belt', category: 'Accessories', price: 1890, images: ['/images/item-07.png', '/images/item-08.png'], sizes: ['M', 'L', 'XL'], colors: ['Cognac', 'Black'], description: 'A timeless leather belt with a brushed metal buckle and carefully finished edges.', stock: 14, isNew: false, featured: false },
+  { id: 'af-008', slug: 'anchor-weekender-cap', name: 'Anchor Weekender Cap', category: 'Accessories', price: 990, images: ['/images/item-08.png', '/images/item-06.png'], sizes: [], colors: ['Forest', 'Stone'], description: 'An easy six-panel cap in washed cotton twill with a subtle embroidered Anchor mark.', stock: 42, isNew: true, featured: false },
+  { id: 'af-009', slug: 'woven-day-scarf', name: 'Woven Day Scarf', category: 'Accessories', price: 1590, images: ['/images/item-09.png', '/images/item-10.png'], sizes: [], colors: ['Ochre', 'Ink'], description: 'Lightweight woven texture with a soft hand and a little warmth for changing days.', stock: 26, isNew: false, featured: false },
+  { id: 'af-010', slug: 'quiet-form-midi-dress', name: 'Quiet Form Midi Dress', category: 'Women', price: 3890, compareAt: 4490, images: ['/images/item-10.png', '/images/item-11.png'], sizes: modestSizes, colors: ['Ink', 'Clay'], description: 'A graceful midi with a softly defined waist, fluid movement, and a clean, modern neckline.', stock: 13, isNew: true, featured: true },
+  { id: 'af-011', slug: 'soft-structure-blouse', name: 'Soft Structure Blouse', category: 'Women', price: 2690, images: ['/images/item-11.png', '/images/item-12.png'], sizes: modestSizes, colors: ['Cloud', 'Sage'], description: 'A versatile blouse with fine gathers, an easy fit, and a quiet sense of polish.', stock: 19, isNew: false, featured: true },
+  { id: 'af-012', slug: 'everyday-drape-trouser', name: 'Everyday Drape Trouser', category: 'Women', price: 3190, images: ['/images/item-12.png', '/images/item-13.png'], sizes: modestSizes, colors: ['Sand', 'Charcoal'], description: 'A high-rise waist and softly falling leg create an effortless shape for daily wear.', stock: 17, isNew: true, featured: false },
+  { id: 'af-013', slug: 'modest-layer-tunic', name: 'Modest Layer Tunic', category: 'Women', price: 2990, images: ['/images/item-13.png', '/images/item-14.png'], sizes: modestSizes, colors: ['Olive', 'Ecru'], description: 'A longer-line tunic with generous coverage, a considered side split, and a comfortable drape.', stock: 22, isNew: false, featured: false },
+  { id: 'af-014', slug: 'weekend-cotton-kurta', name: 'Weekend Cotton Kurta', category: 'Women', price: 3290, images: ['/images/item-14.png', '/images/item-15.png'], sizes: modestSizes, colors: ['Indigo', 'Cloud'], description: 'A contemporary cotton kurta with a relaxed silhouette and understated artisan-inspired detail.', stock: 10, isNew: true, featured: true },
+  { id: 'af-015', slug: 'shoreline-crossbody', name: 'Shoreline Crossbody', category: 'Accessories', price: 2490, images: ['/images/item-15.png', '/images/item-09.png'], sizes: [], colors: ['Cognac', 'Ink'], description: 'A compact crossbody with an adjustable strap, thoughtfully divided interior, and smooth finish.', stock: 9, isNew: false, featured: true },
+];
+
+export const categories = [
+  { name: 'Men', slug: 'men', image: '/images/item-03.png', note: 'A considered everyday uniform' },
+  { name: 'Women', slug: 'women', image: '/images/item-10.png', note: 'Modern forms, made to move' },
+  { name: 'Accessories', slug: 'accessories', image: '/images/item-06.png', note: 'The finishing details' },
+];
+
+export function getProduct(slug) {
+  return products.find((product) => product.slug === slug);
+}
