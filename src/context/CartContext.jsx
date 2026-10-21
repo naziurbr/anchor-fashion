@@ -28,6 +28,7 @@ function readCart() {
 export function CartProvider({ children }) {
   const [items, setItems] = useState(readCart);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [promo, setPromo] = useState('');
 
   useEffect(() => {
     try {
@@ -43,6 +44,8 @@ export function CartProvider({ children }) {
     drawerOpen,
     openDrawer() { setDrawerOpen(true); },
     closeDrawer() { setDrawerOpen(false); },
+    promo,
+    applyPromo(code) { const c = code.trim().toUpperCase(); if (c === 'ANCHOR20') { setPromo(c); return true; } return false; },
     itemCount: items.reduce((total, item) => total + item.quantity, 0),
     subtotal: items.reduce((total, item) => total + item.product.price * item.quantity, 0),
     addItem(product, variants = {}, quantity = 1) {
@@ -69,7 +72,7 @@ export function CartProvider({ children }) {
     clearCart() {
       setItems([]);
     },
-  }), [items, drawerOpen]);
+  }), [items, drawerOpen, promo]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

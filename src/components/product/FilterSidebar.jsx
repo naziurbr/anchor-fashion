@@ -1,7 +1,8 @@
+import { products } from '../../data/products';
 export default function FilterSidebar({ filters, onChange }) {
   const update = (key, value) => onChange({ ...filters, [key]: value });
-  const sizes = ['S', 'M', 'L', 'XL'];
-  const colors = [...new Set(['Ink', 'Stone', 'Olive', 'Ecru', 'Charcoal', 'Sand', 'Cloud', 'Sage', 'Natural', 'Black', 'Cognac', 'Forest', 'Ochre', 'Clay', 'Indigo'])];
+  const sizes = [...new Set(products.flatMap((p) => p.sizes))];
+  const colors = [...new Set(products.flatMap((p) => p.colors))];
   return (
     <aside className="space-y-7 border-b border-white/10 pb-6 md:border-b-0 md:border-r md:pr-6">
       <label className="block text-[11px] font-semibold uppercase tracking-[.2em] text-brand-gray">Sort by
@@ -19,9 +20,9 @@ export default function FilterSidebar({ filters, onChange }) {
         </select>
       </label>
       <label className="block text-[11px] font-semibold uppercase tracking-[.2em] text-brand-gray">Maximum price <span className="text-white">৳{Number(filters.maxPrice).toLocaleString('en-BD')}</span>
-        <input type="range" min="500" max="5000" step="100" value={filters.maxPrice} onChange={(event) => update('maxPrice', Number(event.target.value))} className="mt-3 w-full accent-[#F2C94C]" aria-label="Maximum product price" />
+        <input type="range" min="500" max="7000" step="100" value={filters.maxPrice} onChange={(event) => update('maxPrice', Number(event.target.value))} className="mt-3 w-full accent-[#F2C94C]" aria-label="Maximum product price" />
       </label>
-      <button type="button" onClick={() => onChange({ sort: 'featured', size: '', color: '', maxPrice: 5000 })} className="text-[11px] font-semibold uppercase tracking-[.18em] text-brand-gold underline underline-offset-4">Clear filters</button>
+      <button type="button" onClick={() => onChange({ sort: 'featured', size: '', color: '', maxPrice: 7000 })} className="text-[11px] font-semibold uppercase tracking-[.18em] text-brand-gold underline underline-offset-4">Clear filters</button>
     </aside>
   );
 }

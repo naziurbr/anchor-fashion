@@ -1,3 +1,4 @@
+import { categories } from '../../data/products';
 import { Banknote, MessageCircle, Truck, ArrowUpRight, MapPin } from 'lucide-react';
 import Logo from './Logo';
 import { Link } from '../../utils/navigation';
@@ -33,8 +34,8 @@ export default function Footer() {
             ))}
           </ul>
         </div>
-        <div><h2 className="mb-4 text-[11px] font-bold uppercase tracking-[.2em] text-brand-gold">The collection</h2><ul className="space-y-3 text-xs text-brand-gray"><li><Link to="/shop?new=true" className="hover:text-white">New arrivals</Link></li><li><Link to="/category/men" className="hover:text-white">Men</Link></li><li><Link to="/category/women" className="hover:text-white">Women</Link></li><li><Link to="/category/accessories" className="hover:text-white">Accessories</Link></li></ul></div>
-        <div><h2 className="mb-4 text-[11px] font-bold uppercase tracking-[.2em] text-brand-gold">Discover</h2><ul className="space-y-3 text-xs text-brand-gray"><li><Link to="/about" className="hover:text-white">Our story</Link></li><li><Link to="/contact" className="hover:text-white">Contact</Link></li><li><Link to="/cart" className="hover:text-white">Your bag</Link></li></ul></div>
+        <div><h2 className="mb-4 text-[11px] font-bold uppercase tracking-[.2em] text-brand-gold">The collection</h2><ul className="space-y-3 text-xs text-brand-gray"><li><Link to="/shop?new=true" className="hover:text-white">New arrivals</Link></li>{categories.map((c) => <li key={c.slug}><Link to={`/category/${c.slug}`} className="hover:text-white">{c.name}</Link></li>)}</ul></div>
+        <div><h2 className="mb-4 text-[11px] font-bold uppercase tracking-[.2em] text-brand-gold">Discover</h2><ul className="space-y-3 text-xs text-brand-gray"><li><Link to="/about" className="hover:text-white">Our story</Link></li><li><Link to="/contact" className="hover:text-white">Contact</Link></li><li><Link to="/cart" className="hover:text-white">Your bag</Link></li><li><Link to="/support/size-guide" className="hover:text-white">Size guide</Link></li><li><Link to="/support/shipping" className="hover:text-white">Shipping & returns</Link></li><li><Link to="/support/faq" className="hover:text-white">FAQ</Link></li></ul></div>
         <div><h2 className="mb-4 text-[11px] font-bold uppercase tracking-[.2em] text-brand-gold">Come say hello</h2><p className="flex items-start gap-2 text-xs leading-5 text-brand-gray"><MapPin size={15} className="mt-0.5 shrink-0 text-brand-gold" /> Rangpur, Bangladesh<br />Store opening soon</p><Link to="/contact" className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-white hover:text-brand-gold">Get in touch <ArrowUpRight size={13} /></Link></div>
       </div>
       <div className="mx-auto mt-12 flex max-w-[1280px] flex-col justify-between gap-3 border-t border-white/10 pt-5 text-[11px] uppercase tracking-[.15em] text-brand-gray/70 sm:flex-row"><p>© 2026 Anchor Fashion. All rights reserved.</p><p>Rangpur · Bangladesh</p></div>

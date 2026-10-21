@@ -1,3 +1,4 @@
+import { categories } from '../../data/products';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Menu, Search, ShoppingBag, UserRound, X } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
@@ -8,7 +9,7 @@ import Logo from './Logo';
 import MobileMenu from './MobileMenu';
 import CartDrawer from '../cart/CartDrawer';
 
-const navLinks = [['New', '/shop?new=true'], ['Men', '/category/men'], ['Women', '/category/women'], ['Accessories', '/category/accessories']];
+const navLinks = [['New', '/shop?new=true'], ...categories.map((c) => [c.name, `/category/${c.slug}`])];
 
 function parse(url) {
   const [path, query = ''] = url.split('?');
@@ -79,7 +80,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="announcement-bar px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[.16em] sm:text-[11px]">Rangpur, we’re almost home. <Link to="/about" className="ml-1 underline underline-offset-2">Discover our story</Link></div>
+      <div className="announcement-bar px-4 py-2 text-center text-[11px] font-medium uppercase tracking-[.16em] sm:text-[11px]">Flat 20% off with code ANCHOR20 · Free delivery over ৳999. <Link to="/shop" className="ml-1 underline underline-offset-2">Shop now</Link></div>
       <header className={`sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ${scrolled ? 'border-white/10 bg-brand-black/80 shadow-[0_10px_40px_-12px_rgba(0,0,0,.9)] backdrop-blur-xl' : 'border-white/[.06] bg-brand-black'}`}>
         <div className={`mx-auto flex max-w-[1440px] items-center justify-between gap-5 px-5 transition-[height] duration-300 md:px-12 ${scrolled ? 'h-[60px] md:h-[64px]' : 'h-[68px] md:h-[82px]'}`}>
           <div className="flex items-center gap-1">

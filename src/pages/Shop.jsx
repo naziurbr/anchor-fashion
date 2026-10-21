@@ -5,7 +5,7 @@ import ProductGrid from '../components/product/ProductGrid';
 import { fetchProducts } from '../utils/api';
 import { useNavigation } from '../utils/navigation';
 
-const defaults = { sort: 'featured', size: '', color: '', maxPrice: 5000 };
+const defaults = { sort: 'featured', size: '', color: '', maxPrice: 7000 };
 
 export default function Shop({ category = '' }) {
   const { location } = useNavigation();

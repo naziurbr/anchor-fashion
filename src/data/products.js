@@ -1,29 +1,53 @@
-const apparelSizes = ['S', 'M', 'L', 'XL'];
-const modestSizes = ['S', 'M', 'L', 'XL'];
+const found = import.meta.glob('../assets/products/**/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' });
+const photos = {};
+Object.keys(found).sort().forEach((path) => {
+  const id = path.split('/').pop().match(/^(af-\d{3})/i)?.[1].toLowerCase();
+  if (id) (photos[id] ||= []).push(found[path]);
+});
+const placeholder = `data:image/svg+xml,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'><rect width='400' height='500' fill='#111'/><text x='200' y='250' fill='#F2C94C' font-size='26' font-weight='800' text-anchor='middle' font-family='Georgia,serif' letter-spacing='6'>ANCHOR</text><text x='200' y='285' fill='#777' font-size='11' text-anchor='middle' font-family='sans-serif' letter-spacing='3'>PHOTO COMING SOON</text></svg>")}`;
 
-export const products = [
-  { id: 'af-001', slug: 'rangpur-oxford-shirt', name: 'Rangpur Oxford Shirt', category: 'Men', price: 2890, compareAt: 3490, images: ['/images/item-01.png', '/images/item-02.png'], sizes: apparelSizes, colors: ['Ink', 'Stone'], description: 'A crisp, everyday Oxford with a relaxed shoulder and considered tailoring. Woven for long days and finished with discreet Anchor detailing.', stock: 18, isNew: true, featured: true },
-  { id: 'af-002', slug: 'riverstone-knit-polo', name: 'Riverstone Knit Polo', category: 'Men', price: 2490, images: ['/images/item-02.png', '/images/item-03.png'], sizes: apparelSizes, colors: ['Olive', 'Ecru'], description: 'Soft cotton knit, an easy open collar, and a silhouette that moves cleanly from afternoon to evening.', stock: 24, isNew: true, featured: true },
-  { id: 'af-003', slug: 'northline-overshirt', name: 'Northline Overshirt', category: 'Men', price: 4290, compareAt: 4890, images: ['/images/item-03.png', '/images/item-04.png'], sizes: apparelSizes, colors: ['Olive', 'Ink'], description: 'A light structured layer with utility pockets, tonal buttons, and a clean, versatile profile.', stock: 11, isNew: false, featured: true },
-  { id: 'af-004', slug: 'studio-wide-leg-trouser', name: 'Studio Wide-Leg Trouser', category: 'Men', price: 3290, images: ['/images/item-04.png', '/images/item-05.png'], sizes: apparelSizes, colors: ['Charcoal', 'Sand'], description: 'A straight drape, easy movement, and a refined finish make this a reliable anchor for your wardrobe.', stock: 16, isNew: false, featured: false },
-  { id: 'af-005', slug: 'weekday-linen-shirt', name: 'Weekday Linen Shirt', category: 'Men', price: 2790, images: ['/images/item-05.png', '/images/item-01.png'], sizes: apparelSizes, colors: ['Cloud', 'Sage'], description: 'Breathable linen-blend fabric with a softly tailored fit, made for warm-weather layering.', stock: 21, isNew: true, featured: false },
-  { id: 'af-006', slug: 'field-notes-canvas-tote', name: 'Field Notes Canvas Tote', category: 'Accessories', price: 1290, images: ['/images/item-06.png', '/images/item-07.png'], sizes: [], colors: ['Natural', 'Ink'], description: 'A sturdy everyday carryall in heavyweight cotton canvas with an interior pocket and reinforced handles.', stock: 30, isNew: false, featured: true },
-  { id: 'af-007', slug: 'heritage-leather-belt', name: 'Heritage Leather Belt', category: 'Accessories', price: 1890, images: ['/images/item-07.png', '/images/item-08.png'], sizes: ['M', 'L', 'XL'], colors: ['Cognac', 'Black'], description: 'A timeless leather belt with a brushed metal buckle and carefully finished edges.', stock: 14, isNew: false, featured: false },
-  { id: 'af-008', slug: 'anchor-weekender-cap', name: 'Anchor Weekender Cap', category: 'Accessories', price: 990, images: ['/images/item-08.png', '/images/item-06.png'], sizes: [], colors: ['Forest', 'Stone'], description: 'An easy six-panel cap in washed cotton twill with a subtle embroidered Anchor mark.', stock: 42, isNew: true, featured: false },
-  { id: 'af-009', slug: 'woven-day-scarf', name: 'Woven Day Scarf', category: 'Accessories', price: 1590, images: ['/images/item-09.png', '/images/item-10.png'], sizes: [], colors: ['Ochre', 'Ink'], description: 'Lightweight woven texture with a soft hand and a little warmth for changing days.', stock: 26, isNew: false, featured: false },
-  { id: 'af-010', slug: 'quiet-form-midi-dress', name: 'Quiet Form Midi Dress', category: 'Women', price: 3890, compareAt: 4490, images: ['/images/item-10.png', '/images/item-11.png'], sizes: modestSizes, colors: ['Ink', 'Clay'], description: 'A graceful midi with a softly defined waist, fluid movement, and a clean, modern neckline.', stock: 13, isNew: true, featured: true },
-  { id: 'af-011', slug: 'soft-structure-blouse', name: 'Soft Structure Blouse', category: 'Women', price: 2690, images: ['/images/item-11.png', '/images/item-12.png'], sizes: modestSizes, colors: ['Cloud', 'Sage'], description: 'A versatile blouse with fine gathers, an easy fit, and a quiet sense of polish.', stock: 19, isNew: false, featured: true },
-  { id: 'af-012', slug: 'everyday-drape-trouser', name: 'Everyday Drape Trouser', category: 'Women', price: 3190, images: ['/images/item-12.png', '/images/item-13.png'], sizes: modestSizes, colors: ['Sand', 'Charcoal'], description: 'A high-rise waist and softly falling leg create an effortless shape for daily wear.', stock: 17, isNew: true, featured: false },
-  { id: 'af-013', slug: 'modest-layer-tunic', name: 'Modest Layer Tunic', category: 'Women', price: 2990, images: ['/images/item-13.png', '/images/item-14.png'], sizes: modestSizes, colors: ['Olive', 'Ecru'], description: 'A longer-line tunic with generous coverage, a considered side split, and a comfortable drape.', stock: 22, isNew: false, featured: false },
-  { id: 'af-014', slug: 'weekend-cotton-kurta', name: 'Weekend Cotton Kurta', category: 'Women', price: 3290, images: ['/images/item-14.png', '/images/item-15.png'], sizes: modestSizes, colors: ['Indigo', 'Cloud'], description: 'A contemporary cotton kurta with a relaxed silhouette and understated artisan-inspired detail.', stock: 10, isNew: true, featured: true },
-  { id: 'af-015', slug: 'shoreline-crossbody', name: 'Shoreline Crossbody', category: 'Accessories', price: 2490, images: ['/images/item-15.png', '/images/item-09.png'], sizes: [], colors: ['Cognac', 'Ink'], description: 'A compact crossbody with an adjustable strap, thoughtfully divided interior, and smooth finish.', stock: 9, isNew: false, featured: true },
+const S = { panjabi: ['S (38)', 'M (40)', 'L (42)', 'XL (44)', 'XXL (46)'], top: ['S', 'M', 'L', 'XL', 'XXL'], waist: ['30', '32', '34', '36', '38'], shoe: ['40', '41', '42', '43', '44'], belt: ['32', '34', '36', '38', '40'], none: [] };
+const C = { Panjabi: ['Ivory', 'Midnight'], Shirt: ['Sky', 'White'], Polo: ['Navy', 'Ecru'], Bottom: ['Indigo', 'Charcoal'], Outerwear: ['Olive', 'Ink'], Accessories: ['Black', 'Tan'] };
+// name, category, price, size set, description, flags (n = new, f = featured)
+const rows = [
+  ['Limited Edition Hand-Loomed Mulberry Silk Panjabi', 'Panjabi', 6500, 'panjabi', 'Hand-loomed mulberry silk with a soft sheen, cut for festive evenings.', 'nf'],
+  ['Anchor Signature Gilded Crown Royal Panjabi', 'Panjabi', 4350, 'panjabi', 'Our signature festive Panjabi with gilded detailing and a regal drape.', 'f'],
+  ['Embroidered Zari Heritage Silk Panjabi', 'Panjabi', 4750, 'panjabi', 'Silk Panjabi with zari embroidery inspired by heritage patterns.', 'n'],
+  ['Royal Zari Embroidered Silk Kurta Set', 'Panjabi', 5950, 'panjabi', 'A complete silk kurta set with matching bottoms and zari work.', 'f'],
+  ['Rangpur Oxford Shirt', 'Shirt', 2890, 'top', 'A crisp everyday Oxford with a relaxed shoulder and considered tailoring.', 'nf'],
+  ['Weekday Linen Shirt', 'Shirt', 2790, 'top', 'Breathable linen-blend shirt with a softly tailored fit.', 'n'],
+  ['All-Day Comfort Stretch Pique Polo', 'Polo', 1250, 'top', 'Stretch piqué knit that stays sharp from desk to dinner.', 'f'],
+  ['Supima Silk-Touch Luxe Crewneck T-Shirt', 'Polo', 1150, 'top', 'Supima cotton with a silky hand and a clean crewneck.', 'n'],
+  ['Selvedge Raw Indigo Slim Tapered Jeans', 'Bottom', 2750, 'waist', 'Raw indigo selvedge denim with a slim, tapered leg.', 'f'],
+  ['Studio Wide-Leg Trouser', 'Bottom', 3290, 'waist', 'A straight drape and easy movement with a refined finish.', ''],
+  ['Nocturne Velvet Embroidered Prince Coat', 'Outerwear', 6990, 'panjabi', 'A velvet prince coat with embroidery, made to layer over Panjabi.', 'f'],
+  ['Autumn Dusk Modular Field Overshirt', 'Outerwear', 2490, 'top', 'A light utility overshirt with a clean, versatile profile.', 'nf'],
+  ['Italian Full-Grain Vegetable-Tanned Leather Dress Belt', 'Accessories', 1550, 'belt', 'Full-grain leather belt with a brushed metal buckle.', ''],
+  ['Pure Silk Jacquard Woven Necktie & Pocket Square Set', 'Accessories', 1450, 'none', 'Silk jacquard necktie with a matching pocket square.', ''],
+  ['Mercerized Combed Cotton Dress Socks (Pack of 3)', 'Accessories', 590, 'none', 'Three pairs of mercerized combed cotton dress socks.', ''],
+  ['Heritage Washed Cotton Dad Cap', 'Accessories', 650, 'none', 'Washed cotton cap with a soft, worn-in feel.', 'n'],
+  ['Minimalist Low-Top Nappa Leather Sneakers', 'Accessories', 3850, 'shoe', 'Low-top sneakers in soft nappa leather.', 'f'],
 ];
 
-export const categories = [
-  { name: 'Men', slug: 'men', image: '/images/item-03.png', note: 'A considered everyday uniform' },
-  { name: 'Women', slug: 'women', image: '/images/item-10.png', note: 'Modern forms, made to move' },
-  { name: 'Accessories', slug: 'accessories', image: '/images/item-06.png', note: 'The finishing details' },
+export const products = rows.map(([name, category, price, sizes, description, flags], i) => ({
+  id: `af-${String(i + 1).padStart(3, '0')}`,
+  slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+  name, category, price, description,
+  images: photos[`af-${String(i + 1).padStart(3, '0')}`] || [placeholder],
+  sizes: S[sizes], colors: C[category], stock: 12 + ((i * 5) % 20),
+  isNew: flags.includes('n'), featured: flags.includes('f'),
+}));
+
+const categoryList = [
+  { name: 'Panjabi', slug: 'panjabi', note: 'Festive, wedding and everyday' },
+  { name: 'Shirt', slug: 'shirt', note: 'Sharp tailoring and comfort' },
+  { name: 'Polo', slug: 'polo', note: 'Polos and tees' },
+  { name: 'Bottom', slug: 'bottom', note: 'Denim and trousers' },
+  { name: 'Outerwear', slug: 'outerwear', note: 'Refined layering pieces' },
+  { name: 'Accessories', slug: 'accessories', note: 'The finishing details' },
 ];
+
+export const categories = categoryList.map((c) => ({ ...c, image: products.find((p) => p.category === c.name && p.images[0] !== placeholder)?.images[0] || placeholder }));
 
 export function getProduct(slug) {
   return products.find((product) => product.slug === slug);

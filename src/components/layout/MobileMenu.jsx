@@ -1,9 +1,10 @@
+import { categories } from '../../data/products';
 import { useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Link } from '../../utils/navigation';
 import Logo from './Logo';
 
-const links = [['New arrivals', '/shop?new=true'], ['Men', '/category/men'], ['Women', '/category/women'], ['Accessories', '/category/accessories'], ['About Anchor', '/about'], ['Contact', '/contact']];
+const links = [['New arrivals', '/shop?new=true'], ...categories.map((c) => [c.name, `/category/${c.slug}`]), ['About Anchor', '/about'], ['Contact', '/contact']];
 
 export default function MobileMenu({ open, onClose }) {
   useEffect(() => {

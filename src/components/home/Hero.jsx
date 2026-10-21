@@ -1,96 +1,65 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowRight, Check, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import Button from '../common/Button';
-import Countdown from './Countdown';
+import { Link } from '../../utils/navigation';
 
-const reveal = (delay) => ({ '--d': `${delay}ms` });
+const words = ['Eid.', 'Weddings.', 'Festivals.', 'Every day.'];
+const marquee = ['Free delivery over ৳999', '7-day free returns', 'bKash · Nagad · Rocket', 'Code ANCHOR20 · 20% off', 'Festive 2026'];
+const serif = { fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" };
+const lattice = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 0l28 28-28 28L0 28z' fill='none' stroke='%23F2C94C' stroke-opacity='.9'/%3E%3C/svg%3E\")";
+const css = `
+@keyframes hf{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(40px,-30px,0) scale(1.15)}}
+@keyframes wi{from{opacity:0;transform:translateY(45%) skewY(4deg)}to{opacity:1;transform:none}}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.hx{animation:none!important}}`;
 
 export default function Hero() {
-  const [notifyOpen, setNotifyOpen] = useState(false);
-  const [notifyComplete, setNotifyComplete] = useState(false);
-  const [imageFailed, setImageFailed] = useState(false);
-  const imageRef = useRef(null);
-  const wordRef = useRef(null);
-  const emailRef = useRef(null);
+  const ref = useRef(null);
+  const [i, setI] = useState(0);
 
-  // Gentle parallax on the campaign image and ghost word. Skipped for reduced-motion users.
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    let frame = 0;
-    const run = () => {
-      frame = 0;
-      const y = Math.min(window.scrollY, 900);
-      if (imageRef.current) imageRef.current.style.transform = `translate3d(0, ${y * 0.18}px, 0) scale(1.12)`;
-      if (wordRef.current) wordRef.current.style.transform = `translate3d(${-y * 0.12}px, 0, 0)`;
-    };
-    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(run); };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => { window.removeEventListener('scroll', onScroll); window.cancelAnimationFrame(frame); };
+    const t = setInterval(() => setI((n) => (n + 1) % words.length), 2400);
+    return () => clearInterval(t);
   }, []);
 
-  // Move focus into the email field when the panel opens.
-  useEffect(() => { if (notifyOpen && !notifyComplete) emailRef.current?.focus(); }, [notifyOpen, notifyComplete]);
-
-  function closeNotify() {
-    setNotifyOpen(false);
-    document.getElementById('hero-notify-trigger')?.focus();
-  }
-
-  function submitNotification(event) {
-    event.preventDefault();
-    setNotifyComplete(true); // demo only: nothing is stored or sent
-  }
+  const move = (e) => {
+    const r = ref.current.getBoundingClientRect();
+    ref.current.style.setProperty('--x', `${e.clientX - r.left}px`);
+    ref.current.style.setProperty('--y', `${e.clientY - r.top}px`);
+  };
 
   return (
-    <section className="hero-campaign relative isolate overflow-hidden">
-      {!imageFailed && <img ref={imageRef} src="/images/hero-editorial.png" alt="" aria-hidden="true" onError={() => setImageFailed(true)} style={{ transform: 'scale(1.12)' }} className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-65 will-change-transform" />}
-      <div className="hero-shade absolute inset-0 -z-10" />
-      <div ref={wordRef} className="pointer-events-none absolute inset-0 -z-0 will-change-transform" aria-hidden="true">
-        <div className="hero-word absolute -left-4 top-1/2 -translate-y-1/2 select-none font-display text-[21vw] font-black leading-none tracking-[-.08em] text-outline opacity-55">RANGPUR</div>
-      </div>
-      <div className="relative mx-auto flex min-h-[630px] max-w-[1440px] flex-col justify-between px-6 pb-9 pt-12 md:min-h-[690px] md:px-12 md:pb-12 md:pt-16">
-        <div className="reveal flex items-center justify-between" style={reveal(0)}>
-          <p className="text-[11px] font-semibold uppercase tracking-[.3em] text-white/70">A new chapter, closer to home</p>
-          {/* Approximate position of Rangpur city: please confirm against the store location. */}
-          <p className="hidden text-[11px] uppercase tracking-[.25em] text-white/55 sm:block">25°45′ N · 89°17′ E</p>
+    <section ref={ref} onMouseMove={move} style={{ '--x': '70%', '--y': '35%' }} className="relative isolate overflow-hidden bg-brand-black">
+      <style>{css}</style>
+      <div className="hx absolute -left-32 top-10 -z-10 h-[520px] w-[520px] rounded-full bg-brand-gold/20 blur-[130px] [animation:hf_14s_ease-in-out_infinite]" aria-hidden="true" />
+      <div className="hx absolute -right-24 bottom-0 -z-10 h-[460px] w-[460px] rounded-full bg-amber-700/25 blur-[130px] [animation:hf_18s_ease-in-out_infinite_reverse]" aria-hidden="true" />
+      <div className="absolute inset-0 -z-10 opacity-[.07]" style={{ backgroundImage: lattice }} aria-hidden="true" />
+      <div className="absolute inset-0 -z-10 opacity-60" style={{ backgroundImage: lattice, WebkitMaskImage: 'radial-gradient(circle 280px at var(--x) var(--y), #000, transparent)', maskImage: 'radial-gradient(circle 280px at var(--x) var(--y), #000, transparent)' }} aria-hidden="true" />
+      <p className="pointer-events-none absolute -bottom-6 left-1/2 -z-10 -translate-x-1/2 select-none text-[clamp(7rem,27vw,24rem)] font-black leading-none tracking-[-.06em] text-transparent [-webkit-text-stroke:1px_rgba(242,201,76,.22)]" aria-hidden="true">ANCHOR</p>
+
+      <div className="relative mx-auto flex min-h-[640px] max-w-[1440px] flex-col justify-center px-6 pb-24 pt-16 md:min-h-[740px] md:px-12">
+        <p className="mb-6 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[.38em] text-brand-gold"><span className="h-px w-10 bg-brand-gold" aria-hidden="true" />Anchor Fashion · Est. for the modern gentleman</p>
+        <h1 className="text-[clamp(3rem,9vw,8.5rem)] font-medium leading-[.98] tracking-[-.03em] text-white" style={serif}>
+          Dressed for
+          <span className="block overflow-hidden pb-2"><em key={i} className="hx block bg-gradient-to-r from-[#fff3c4] via-brand-gold to-[#c9962b] bg-clip-text text-transparent [animation:wi_.7s_cubic-bezier(.22,1,.36,1)_both]">{words[i]}</em></span>
+        </h1>
+        <p className="mt-6 max-w-md text-sm leading-7 text-white/65">Silk Panjabi, sharp shirts and everyday essentials, made to be remembered.</p>
+        <div className="mt-9 flex flex-wrap gap-3">
+          <Button to="/category/panjabi">Shop Panjabi <ArrowRight size={15} /></Button>
+          <Button to="/shop" variant="outline">Shop all</Button>
         </div>
-        <div className="relative z-10 grid items-end gap-10 lg:grid-cols-[1.2fr_.8fr]">
-          <div>
-            <p className="reveal mb-3 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[.32em] text-brand-gold" style={reveal(120)}><span className="h-px w-8 bg-brand-gold" aria-hidden="true" />Rangpur · Opening soon</p>
-            <h1 className="reveal font-display text-[clamp(5rem,14vw,12rem)] font-black leading-[.77] tracking-[-.055em] text-white" style={reveal(220)}>
-              ANCHOR<span className="block pl-[.17em] text-[.38em] font-medium leading-[1.3] tracking-[.3em] text-brand-gold">FASHION</span>
-            </h1>
-            <div className="reveal mt-8 flex flex-wrap gap-3" style={reveal(380)}>
-              <Button id="hero-notify-trigger" type="button" onClick={() => { setNotifyOpen(!notifyOpen); setNotifyComplete(false); }} aria-expanded={notifyOpen} aria-controls="hero-notify-panel"><Mail size={15} /> Notify Me</Button>
-              <Button to="/contact" variant="outline"><MapPin size={15} /> Store locator</Button>
-              <Button to="/shop" variant="outline">Explore the collection <ArrowRight size={15} /></Button>
-            </div>
-            <div id="hero-notify-panel" hidden={!notifyOpen} onKeyDown={(event) => event.key === 'Escape' && closeNotify()} className="fade-in mt-4 max-w-md rounded-2xl border border-white/15 bg-brand-black/80 p-4 backdrop-blur-md">
-              {notifyComplete ? (
-                <p role="status" className="flex items-start gap-3 text-xs leading-5 text-white">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-gold text-brand-black"><Check size={13} strokeWidth={3} /></span>
-                  Thanks for your interest. This demo does not save your email or send notifications.
-                </p>
-              ) : (
-                <form onSubmit={submitNotification} className="flex flex-col gap-3 sm:flex-row">
-                  <label htmlFor="hero-notify-email" className="sr-only">Email address for launch updates</label>
-                  <input ref={emailRef} id="hero-notify-email" type="email" autoComplete="email" required placeholder="Your email address" className="form-input min-w-0 flex-1 rounded-full" />
-                  <button type="submit" className="rounded-full border border-brand-gold px-5 py-3 text-[11px] font-bold uppercase tracking-[.16em] text-brand-gold transition-colors hover:bg-brand-gold hover:text-brand-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold">Join the list</button>
-                  <p className="sr-only">Demo only. No email is stored or sent.</p>
-                </form>
-              )}
-              {!notifyComplete && <p className="mt-2 text-[11px] text-white/60">Demo only · No email will be stored or sent.</p>}
-            </div>
-          </div>
-          <div className="reveal max-w-[400px] border-l border-white/25 pl-5 lg:justify-self-end" style={reveal(520)}>
-            <p className="font-display text-2xl leading-snug text-white md:text-3xl">Good things are coming to <span className="text-brand-gold">Rangpur.</span></p>
-            <p className="mt-3 text-xs leading-6 text-white/65">Discover a new expression of everyday style. Meet us at our first Rangpur store this season.</p>
-            <div className="mt-7 border-t border-white/15 pt-5"><Countdown /></div>
-          </div>
-        </div>
-        <a href="#the-edit" className="reveal flex items-center gap-2 self-start text-[11px] font-semibold uppercase tracking-[.24em] text-white/60 hover:text-brand-gold" style={reveal(640)}><ArrowDown size={14} className="bob" /> Scroll to discover</a>
+        <Link to="/shop" aria-label="Get 20% off with code ANCHOR20" className="group absolute right-6 top-10 grid h-32 w-32 place-items-center md:right-16 md:top-1/2 md:h-40 md:w-40 md:-translate-y-1/2">
+          <svg viewBox="0 0 120 120" className="hx h-full w-full [animation:spin_16s_linear_infinite]" aria-hidden="true"><defs><path id="ring" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs><text fill="#F2C94C" fontSize="9.5" fontWeight="700"><textPath href="#ring" textLength="285" lengthAdjust="spacing">ANCHOR20 · 20% OFF · ANCHOR20 · 20% OFF · </textPath></text></svg>
+          <span className="absolute grid h-16 w-16 place-items-center rounded-full bg-brand-gold text-brand-black transition group-hover:scale-110 md:h-20 md:w-20"><ArrowUpRight size={26} /></span>
+        </Link>
       </div>
-      <span className="hero-index absolute bottom-12 right-6 hidden text-[11px] tracking-[.25em] text-white/45 md:block">THE RANGPUR EDITION · 2026</span>
+
+      <div className="absolute inset-x-0 bottom-0 overflow-hidden border-y border-brand-gold/25 bg-brand-black/70 py-3 backdrop-blur" aria-hidden="true">
+        <div className="hx flex w-max gap-12 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[.25em] text-brand-gold [animation:mq_32s_linear_infinite]">
+          {[...marquee, ...marquee, ...marquee, ...marquee].map((t, n) => <span key={n} className="flex items-center gap-12">{t}<span className="text-white/30">◆</span></span>)}
+        </div>
+      </div>
     </section>
   );
 }
